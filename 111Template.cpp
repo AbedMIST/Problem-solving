@@ -6,6 +6,7 @@
 #include<map>
 #define PI         acos(-1)
 #define ll         long long
+#define int        long long
 #define MAX        100005
 #define mod        1000000007  
 #define pb         push_back
@@ -28,9 +29,10 @@ typedef pair<int, int>              pii;
 typedef pair<long long, long long>  pll;
 typedef vector<int>                 vi;
 typedef vector<pair<int,int>>       vii;
-const int MAXN   =   1e6+7;
-const int INF    =   (int)1e7;
-const double EPS =   1e-9;
+#define       MAX       500005
+#define       INF       1<<30
+#define       EPS       1e-9
+const   int   inf    = 1e18+2; 
 
 
 
@@ -96,7 +98,7 @@ ll power(ll a , ll n, ll m)
 }
 vector <long long> prime;
 bool sieve[1000001];
-void primesieve(ll n){
+void primesieve(ll n){      //O(nlog(logn))
     sieve[0] = sieve[1] = 1;
     prime.push_back(2);
     for(long long i = 4; i<=n; i+=2){
@@ -115,9 +117,9 @@ void primesieve(ll n){
     }
 }
 vector <long long> primeFactors;
-void primeFactorize(ll n){
+void primeFactorize(ll n){      //O(log(n))
     ll sqrtn = sqrt(n);
-    primesieve(n);
+    primesieve(n);              //need to cut 
     for(long long i=0;i<prime.size()&&prime[i]<=sqrtn;i++){
         if(sieve[n] == 0) break;
         if(n % prime[i] == 0){
@@ -171,7 +173,21 @@ int SOD( int n ) {
     }
     return res;
 }
-int binarySearch(int arr[], int l, int r, int x)
+int euler_phi(int n) {      //O(sqrt(n)) -->co-prime to n 
+    int result = n;
+    for (int i = 2; i * i <= n; i++) {
+        if (n % i == 0) {
+            while (n % i == 0)
+                n /= i;
+            result -= result / i;   //phi(n)=n*(1-1/p1)(1-1/p2)..(1-1/p^k)
+        }
+    }
+    if (n > 1)
+        result -= result / n;
+    return result;
+}
+
+int binarySearch(int arr[], int l, int r, int x)    //O(log(n))
 {
     while (l <= r) {
         int m = l + (r - l) / 2;
@@ -190,7 +206,7 @@ int binarySearch(int arr[], int l, int r, int x)
 
 vector<ll> gra[100005];
 ll vis[100005];
-void bfs(int shuru)
+void bfs(int shuru)     //O(V+E)
 {
     vis[shuru] = 1;
     queue<int> q;
@@ -218,7 +234,7 @@ vector<ll> v[2005];
 //ll vis[2005];
 ll mx=-1;
 
-ll dfs(ll x,ll level ){
+ll dfs(ll x,ll level ){     //O(V+E)
     vis[x]=1;
     mx=max(mx,level);
     for(int i=0;i<v[x].size();i++){
@@ -229,7 +245,7 @@ ll dfs(ll x,ll level ){
 }
 
 
-int main()
+signed main()
 {
      FastRead;
      //freopen("input.txt","r",stdin);

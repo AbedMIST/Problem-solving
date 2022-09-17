@@ -10,8 +10,8 @@ int n,color[100],parent[100];
 vector <int> adj[100];
 int cycle_start,cycle_end;
 
-bool dfs(int u, int par) {
-    color[u] = 1;          ///grey
+bool dfs(int u, int par) {      //notice->no parent calc needed for directed graph
+    color[u] = 1;          //grey
     for (int v : adj[u]) {
         if(v == par) continue; ///skipping edge to parent vertex
         if (color[v] == 0) {

@@ -23,14 +23,14 @@ void init()
     }
 }
 
-ll find(ll v)
+ll find(ll v)      //almost O(1)
 {
 	if(par[v]==v)	return v;	//parent found
 
 	return par[v]= find(par[v]);		//path compression
 }
 
-void Union(ll a,ll b)
+void Union(ll a,ll b)    //O(alpha(n))--> amortized,close to O(1)
 {
 	//two roots
 	a = find(a);

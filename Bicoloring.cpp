@@ -1,10 +1,10 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-#define sz 100
+#define sz 1000
 
-vector<int>adj[sz];
-int visited[sz],color[sz],flg;
+vector<int> adj[sz];
+int color[sz],flg;
 
 void DFS(int u)
 {
@@ -30,22 +30,23 @@ void DFS(int u)
 
 int main()
 {
-    int t,a,b,node,edge;
-    cin>>t;
-    for(int j=1;j<=t;j++)
+    int a,b,node,edge;
+
+    while(cin>>node)
     {
-        cin>>node>>edge;
-        memset(visited,0,sizeof(visited));
+        if(node==0) break;
+        
+        cin>>edge;
         memset(color,0,sizeof(color));
 
-        for(int i=0;i<sz;i++)adj[i].clear();
+        for(int i=0;i<sz;i++) adj[i].clear();
         for(int i=0;i<edge;i++)
         {
             cin>>a>>b;
             adj[a].push_back(b);
             adj[b].push_back(a);
         }
-        flg=0;
+        flg=0;              //initially bicoloring possible
 
         DFS(1);
 
@@ -53,5 +54,4 @@ int main()
         else  printf("BICOLORABLE.\n");
     }
 }
-
 

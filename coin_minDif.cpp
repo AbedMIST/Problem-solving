@@ -1,10 +1,11 @@
-//Pallindromic substring in O(n^2)
+//coin change min difference 
 
 #include<bits/stdc++.h>
 #include<iostream>
 #include<map>
 #define PI         acos(-1)
 #define ll         long long
+#define int        long long
 #define MAX        100005
 #define mod        1000000007  
 #define pb         push_back
@@ -27,66 +28,47 @@ typedef vector<pair<int,int>>       vii;
 const int MAXN   =   1e6+7;
 const int INF    =   (int)1e7;
 const double EPS =   1e-9;
-using namespace std;
 
 
-ll min_dif(ll n,ll sum,vector<ll> &a)    //tabulization
+int wt[105];
+int dp[105][50000+5];
+
+
+int knapSack(int i,int w)
 {
-    ll idx,target,i,j,k;
+    if (i == 0 || w == 0) return 0;
+    if(dp[i][w]!=0) return dp[i][w];
 
-    k = sum;
-    vector<vector<bool>> dp(n, vector<bool>(k+1,0));
+    int ret1=0,ret2=0;
+    if(w-wt[i]>=0)
+        ret1= wt[i] + knapSack(i-1,w-wt[i]);    ///Taken
 
-    for(i=0;i<n;i++)    dp[i][0]= true;     //base case
-
-    if(a[0]<=k)    dp[0][a[0]] = true;
-
-    for(idx=1;idx<n;idx++){                 //subset sum to k
-        for(target=1; target<=k;target++){
-
-            bool notTake= dp[idx-1][target];
-
-            bool take = false;
-            if(target>=a[idx])
-                take = dp[idx-1][target-a[idx]];   
-
-            dp[idx][target] = take | notTake;   //only true or false
-        }
-    }
-    //return dp[n-1][k];
-
-    ll s1,mn = 1e9;
-    for(s1=0; s1<= sum/2 ; s1++){   //other half will repeat the subset
-        if(dp[n-1][s1]){                    //all possible sum--> FOCUS
-            mn = min(mn, abs((sum-s1)-s1));
-        }
-    }
-
-    return mn;
+    ret2= knapSack(i-1,w);          ///Not taken
+    return dp[i][w]=max(ret1,ret2);
 
 }
 
 
 void solve(){
-    ll i,j,n,x;
+    int i,j,n,x;
     
     cin>>n;
-    vector<ll> v(n,0);
-    ll sum=0;
+    int sum=0;
 
-    for(i=0;i<n;i++){
-        cin>>v[i];
-        sum+= v[i];
+    memset(dp,0,sizeof(dp));
+    for(i=1;i<=n;i++){
+        cin>>wt[i];
+        sum+= wt[i];
     }
     
-    ll ans = min_dif(n,sum,v);
+    int ans = abs(sum - 2*knapSack(n,sum/2));
     cout<<ans<<endl;
 
 }
 
-int main(){
-    //FastRead;
-    ll t; cin >> t;
+signed main(){
+    FastRead;
+    int t; cin >> t;
     while(t--) solve();
    
 

@@ -31,7 +31,7 @@ public:
         return pNode;
     }
     
-    void insert(string str) {
+    void insert(string str) {  //O(n)
         Node *p = root;
 
         for (int i = 0; i < str.length(); i++)
@@ -46,7 +46,7 @@ public:
         p->flag = true;
     }
     
-    bool search(string str) {
+    bool search(string str) {  //O(n)
         Node *p = root;
 
         for (int i = 0; i < str.length(); i++)
@@ -61,7 +61,7 @@ public:
         return (p != NULL && p->flag);  //return true of flag true
     }
     
-    bool startsWith(string str) {
+    bool startsWith(string str) {  //O(n)
         Node *p = root;
 
         for (int i = 0; i < str.length(); i++)

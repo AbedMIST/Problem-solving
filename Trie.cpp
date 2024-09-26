@@ -1,4 +1,4 @@
-// C++ implementation of search and insert
+// C++ implementation of search and insert, for multiple strings it's efficient
 #include <bits/stdc++.h>
 using namespace std;
 
